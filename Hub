@@ -55,9 +55,7 @@ local function Stroke(parent, props)
 end
 
 local function CreateTween(instance, prop, value, time, tweenWait)
-    local tween = TweenService:Create(instance,
-        TweenInfo.new(time, Enum.EasingStyle.Linear),
-        {[prop] = value})
+    local tween = TweenService:Create(instance, TweenInfo.new(time, Enum.EasingStyle.Linear), {[prop] = value})
     tween:Play()
     if tweenWait then
         tween.Completed:Wait()
@@ -65,15 +63,14 @@ local function CreateTween(instance, prop, value, time, tweenWait)
 end
 
 -- Main GUI Elements
-local ScreenGui = Create("ScreenGui", CoreGui, {
-    Name = "Custom GUI"
-})
+local ScreenGui = Create("ScreenGui", CoreGui, {Name = "Custom GUI"})
 
 local Menu = Create("Frame", ScreenGui, {
     BackgroundColor3 = Configs_HUB.Cor_Hub,
     Position = UDim2.new(0.241, 0, 0.153, 0),
     Size = UDim2.new(0, 550, 0, 350)
-})Corner(Menu)
+})
+Corner(Menu)
 
 local ScrollBar = Create("ScrollingFrame", Menu, {
     Active = true,
@@ -84,22 +81,21 @@ local ScrollBar = Create("ScrollingFrame", Menu, {
     CanvasSize = UDim2.new(0, 0, 0, 0),
     ScrollBarThickness = 2,
     ScrollingDirection = Enum.ScrollingDirection.Y
-})Create("UIPadding", ScrollBar, {
+})
+Create("UIPadding", ScrollBar, {
     PaddingBottom = UDim.new(0, 10),
     PaddingLeft = UDim.new(0, 10),
     PaddingRight = UDim.new(0, 10),
     PaddingTop = UDim.new(0, 10)
-})Create("UIGridLayout", ScrollBar, {
+})
+Create("UIGridLayout", ScrollBar, {
     CellSize = UDim2.new(0, 130, 0, 35),
     CellPadding = UDim2.new(0, 10, 0, 10),
     FillDirection = Enum.FillDirection.Horizontal,
     SortOrder = Enum.SortOrder.LayoutOrder
 })
 
-local TopBar = Create("Frame", Menu, {
-    BackgroundTransparency = 1,
-    Size = UDim2.new(1, 0, 0, 25)
-})
+local TopBar = Create("Frame", Menu, {BackgroundTransparency = 1, Size = UDim2.new(1, 0, 0, 25)})
 
 local ButtonsFrame = Create("Frame", TopBar, {
     AnchorPoint = Vector2.new(1, 0),
@@ -148,7 +144,8 @@ local Containers = Create("Frame", Menu, {
     BackgroundTransparency = 1,
     Position = UDim2.new(1, 0, 1, 0),
     Size = UDim2.new(0, 400, 0, 324)
-})Corner(Containers)
+})
+Corner(Containers)
 
 -- Functionality for Close and Minimize Buttons
 local IsMinimized = false
@@ -247,9 +244,7 @@ local function MakeTab(Configs)
         BorderColor3 = Color3.fromRGB(0, 0, 0),
         BorderSizePixel = 0
     })
-    Create("UICorner", Circle, {
-        CornerRadius = UDim.new(0, 100)
-    })
+    Create("UICorner", Circle, {CornerRadius = UDim.new(0, 100)})
 
     local Name = Create("TextLabel", Tab, {
         Size = UDim2.new(0, 89, 0, 26),
@@ -262,9 +257,7 @@ local function MakeTab(Configs)
         TextXAlignment = Enum.TextXAlignment.Left
     })
 
-    Create("UICorner", Tab, {
-        CornerRadius = UDim.new(0, 6)
-    })
+    Create("UICorner", Tab, {CornerRadius = UDim.new(0, 6)})
 
     local Container = Create("ScrollingFrame", Containers, {
         Size = UDim2.new(1, 0, 1, 0),
