@@ -608,157 +608,176 @@ function AddCosaADD(parent, Configs)
     return UpdateAddedText
 end
 ---addddd
-	function AddColorPicker(parent, Configs)
-		local name = Configs.Name or "Color Picker"
-		local Default = Configs.Default or Color3.fromRGB(0, 0, 200)
-		local Callback = Configs.Callback or function() end
-		local ColorH, ColorS, ColorV = 1, 1, 1
-		Callback(Default)
+function AddColorPicker(parent, Configs)
+    local name = Configs.Name or "Color Picker"
+    local Default = Configs.Default or Color3.fromRGB(0, 0, 200)
+    local Callback = Configs.Callback or function() end
+    local ColorH, ColorS, ColorV = 1, 1, 1
+    Callback(Default)
 
-		local TextButton = Create("Frame", parent, {
-			Size = UDim2.new(1, 0, 0, 25),
-			BackgroundColor3 = Configs_HUB.Cor_Options,
-		})Corner(TextButton)
+    local TextButton = Create("Frame", parent, {
+        Size = UDim2.new(1, 0, 0, 25),
+        BackgroundColor3 = Configs_HUB.Cor_Options,
+    })Corner(TextButton)
 
-		local click = Create("TextButton", TextButton, {
-			Size = UDim2.new(1, 0, 0, 25),
-			BackgroundTransparency = 1,
-			AutoButtonColor = false,
-			Text = ""
-		})
+    local click = Create("TextButton", TextButton, {
+        Size = UDim2.new(1, 0, 0, 25),
+        BackgroundTransparency = 1,
+        AutoButtonColor = false,
+        Text = ""
+    })
 
-		local TextLabel = Create("TextLabel", TextButton, {
-			Size = UDim2.new(1, -10, 0, 25),
-			Position = UDim2.new(0, 35, 0, 0),
-			TextSize = 12,
-			TextColor3 = Configs_HUB.Cor_Text,
-			TextXAlignment = "Left",
-			Text = name,
-			Font = Configs_HUB.Text_Font,
-			BackgroundTransparency = 1
-		})
+    local TextLabel = Create("TextLabel", TextButton, {
+        Size = UDim2.new(1, -10, 0, 25),
+        Position = UDim2.new(0, 35, 0, 0),
+        TextSize = 12,
+        TextColor3 = Configs_HUB.Cor_Text,
+        TextXAlignment = "Left",
+        Text = name,
+        Font = Configs_HUB.Text_Font,
+        BackgroundTransparency = 1
+    })
 
-		local picker = Create("Frame", TextButton, {
-			Size = UDim2.new(0, 20, 0, 20),
-			Position = UDim2.new(0, 5, 0, 2.5),
-			BackgroundColor3 = Default
-		})Corner(picker)Stroke(picker)
+    local picker = Create("Frame", TextButton, {
+        Size = UDim2.new(0, 20, 0, 20),
+        Position = UDim2.new(0, 5, 0, 2.5),
+        BackgroundColor3 = Default
+    })Corner(picker)Stroke(picker)
 
-		local UI_Grade = Create("ImageButton", TextButton, {
-			Size = UDim2.new(1, -100, 1, tonumber(-TextButton.Size.Y.Offset - 20)),
-			Position = UDim2.new(0, 10, 0, tonumber(TextButton.Size.Y.Offset + 12.5)),
-			Visible = false,
-			Image = "rbxassetid://4155801252"
-		})Corner(UI_Grade)Stroke(UI_Grade)local SavePos = Create("Frame", UI_Grade, {Visible = false})
+    local UI_Grade = Create("ImageButton", TextButton, {
+        Size = UDim2.new(1, -100, 1, tonumber(-TextButton.Size.Y.Offset - 20)),
+        Position = UDim2.new(0, 10, 0, tonumber(TextButton.Size.Y.Offset + 12.5)),
+        Visible = false,
+        Image = "rbxassetid://4155801252"
+    })Corner(UI_Grade)Stroke(UI_Grade)local SavePos = Create("Frame", UI_Grade, {Visible = false})
 
-		local grade = Create("TextButton", TextButton, {
-			Size = UDim2.new(0, 30, 1, tonumber(-TextButton.Size.Y.Offset - 20)),
-			Position = UDim2.new(1, -10, 0, tonumber(TextButton.Size.Y.Offset + 12.5)),
-			AnchorPoint = Vector2.new(1, 0),
-			Visible = false,
-			Text = ""
-		})Corner(grade)Stroke(grade)Create("UIGradient", grade, {
-			Rotation = 90,
-			Color = ColorSequence.new({
-				ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 4)),
-				ColorSequenceKeypoint.new(0.20, Color3.fromRGB(234, 255, 0)),
-				ColorSequenceKeypoint.new(0.40, Color3.fromRGB(21, 255, 0)),
-				ColorSequenceKeypoint.new(0.60, Color3.fromRGB(0, 255, 255)),
-				ColorSequenceKeypoint.new(0.80, Color3.fromRGB(0, 17, 255)),
-				ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 0, 251)),
-				ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 4))
-			})
-		})local SavePos2 = Create("Frame", grade, {Visible = false, Size = UDim2.new(1, 0, 0, 0)})
+    local grade = Create("TextButton", TextButton, {
+        Size = UDim2.new(0, 30, 1, tonumber(-TextButton.Size.Y.Offset - 20)),
+        Position = UDim2.new(1, -10, 0, tonumber(TextButton.Size.Y.Offset + 12.5)),
+        AnchorPoint = Vector2.new(1, 0),
+        Visible = false,
+        Text = ""
+    })Corner(grade)Stroke(grade)Create("UIGradient", grade, {
+        Rotation = 90,
+        Color = ColorSequence.new({
+            ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 4)),
+            ColorSequenceKeypoint.new(0.20, Color3.fromRGB(234, 255, 0)),
+            ColorSequenceKeypoint.new(0.40, Color3.fromRGB(21, 255, 0)),
+            ColorSequenceKeypoint.new(0.60, Color3.fromRGB(0, 255, 255)),
+            ColorSequenceKeypoint.new(0.80, Color3.fromRGB(0, 17, 255)),
+            ColorSequenceKeypoint.new(0.90, Color3.fromRGB(255, 0, 251)),
+            ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 4))
+        })
+    })local SavePos2 = Create("Frame", grade, {Visible = false, Size = UDim2.new(1, 0, 0, 0)})
 
-		local A_1 = Create("Frame", TextButton, {
-			Size = UDim2.new(1, 0, 0, 0),
-			Position = UDim2.new(0, 0, 0, 30),
-            BackgroundTransparency = 1,
-			Visible = false
-		})
+    local A_1 = Create("Frame", TextButton, {
+        Size = UDim2.new(1, 0, 0, 0),
+        Position = UDim2.new(0, 0, 0, 30),
+        BackgroundTransparency = 1,
+        Visible = false
+    })
 
-		local Select1 = Create("Frame", grade, {
-			Size = UDim2.new(1, 0, 0, 10),
-			Position = UDim2.new(0, 0, 0, select(3, Color3.toHSV(Default))),
-			BackgroundTransparency = 1,
-			Active = true,
-			Draggable = true
-		})Corner(Select1, {CornerRadius = UDim.new(2, 0)})Stroke(Select1, {Color = Color3.fromRGB(255, 255, 255)})
+    local Select1 = Create("Frame", grade, {
+        Size = UDim2.new(1, 0, 0, 10),
+        Position = UDim2.new(0, 0, 0, select(3, Color3.toHSV(Default))),
+        BackgroundTransparency = 1,
+        Active = true,
+        Draggable = true
+    })Corner(Select1, {CornerRadius = UDim.new(2, 0)})Stroke(Select1, {Color = Color3.fromRGB(255, 255, 255)})
 
-		local Select2 = Create("Frame", UI_Grade, {
-			Size = UDim2.new(0, 15, 0, 15),
-			Position = UDim2.new(0, select(2, Color3.toHSV(Default)), 0, select(1, Color3.toHSV(Default))),
-			BackgroundTransparency = 1,
-			Active = true,
-			Draggable = true
-		})Corner(Select2, {CornerRadius = UDim.new(2, 0)})Stroke(Select2, {Color = Color3.fromRGB(255, 255, 255)})
+    local Select2 = Create("Frame", UI_Grade, {
+        Size = UDim2.new(0, 15, 0, 15),
+        Position = UDim2.new(0, select(2, Color3.toHSV(Default)), 0, select(1, Color3.toHSV(Default))),
+        BackgroundTransparency = 1,
+        Active = true,
+        Draggable = true
+    })Corner(Select2, {CornerRadius = UDim.new(2, 0)})Stroke(Select2, {Color = Color3.fromRGB(255, 255, 255)})
 
-		UI_Grade.MouseButton1Click:Connect(function()
-			local mouse = UserInputService:GetMouseLocation()
-			local savepos = SavePos.AbsolutePosition
-			CreateTween(Select2, "Position", UDim2.new(0, mouse.X - savepos.X, 0, tonumber(mouse.Y - savepos.Y) - 35), 0.3, false)
-		end)
+    UI_Grade.MouseButton1Click:Connect(function()
+        local mouse = UserInputService:GetMouseLocation()
+        local savepos = SavePos.AbsolutePosition
+        CreateTween(Select2, "Position", UDim2.new(0, mouse.X - savepos.X, 0, tonumber(mouse.Y - savepos.Y) - 35), 0.3, false)
+    end)
 
-		grade.MouseButton1Click:Connect(function()
-			local mouse = UserInputService:GetMouseLocation().Y - 35
-			local savepos = SavePos2.AbsolutePosition.Y
-			CreateTween(Select1, "Position", UDim2.new(0, 0, 0, mouse - savepos), 0.3, false)
-		end)
+    grade.MouseButton1Click:Connect(function()
+        local mouse = UserInputService:GetMouseLocation().Y - 35
+        local savepos = SavePos2.AbsolutePosition.Y
+        CreateTween(Select1, "Position", UDim2.new(0, 0, 0, mouse - savepos), 0.3, false)
+    end)
 
-		local function callback()Callback(Color3.fromHSV(ColorH, ColorS, ColorV))end
-		local function updcolorpicker()
-			ColorH = tonumber(Select1.Position.Y.Offset) / 80
-			ColorS = tonumber(215 - Select2.Position.X.Offset) / 215
-			ColorV = tonumber(75 - Select2.Position.Y.Offset) / 75
-			UI_Grade.ImageColor3 = Color3.fromHSV(ColorH, 1, 1)
-			picker.BackgroundColor3 = Color3.fromHSV(ColorH, ColorS, ColorV)
-			callback()
-		end
+    local function callback()
+        Callback(Color3.fromHSV(ColorH, ColorS, ColorV))
+    end
 
-		updcolorpicker()
+    local function updcolorpicker()
+        ColorH = tonumber(Select1.Position.Y.Offset) / 80
+        ColorS = tonumber(215 - Select2.Position.X.Offset) / 215
+        ColorV = tonumber(75 - Select2.Position.Y.Offset) / 75
+        UI_Grade.ImageColor3 = Color3.fromHSV(ColorH, 1, 1)
+        picker.BackgroundColor3 = Color3.fromHSV(ColorH, ColorS, ColorV)
+        callback()
+    end
 
-		Select1.Changed:Connect(function(prop)
-			if prop == "Position" then
-				Select1.Position = UDim2.new(0, 0, 0, math.clamp(Select1.Position.Y.Offset, 0, 80))
-				updcolorpicker()
-			end
-		end)
+    updcolorpicker()
 
-		Select2.Changed:Connect(function(prop)
-			if prop == "Position" then
-				Select2.Position = UDim2.new(0, math.clamp(Select2.Position.X.Offset, 0, 222), 0, math.clamp(Select2.Position.Y.Offset, 0, 75))
-				updcolorpicker()
-			end
-		end)
+    Select1.Changed:Connect(function(prop)
+        if prop == "Position" then
+            Select1.Position = UDim2.new(0, 0, 0, math.clamp(Select1.Position.Y.Offset, 0, 80))
+            updcolorpicker()
+        end
+    end)
 
-		TextButton.Changed:Connect(function(prop)
-			if prop == "Size" then
-				if TextButton.Size.Y.Offset >= 60 then
-					picker.Position = UDim2.new(0, 5, 0, 5)
-					UI_Grade.Visible = true
-					A_1.Visible = true
-					grade.Visible = true
-				else
-					picker.Position = UDim2.new(0, 5, 0, 2.5)
-					UI_Grade.Visible = false
-					A_1.Visible = false
-					grade.Visible = false
-				end
-			end
-		end)
+    Select2.Changed:Connect(function(prop)
+        if prop == "Position" then
+            Select2.Position = UDim2.new(0, math.clamp(Select2.Position.X.Offset, 0, 222), 0, math.clamp(Select2.Position.Y.Offset, 0, 75))
+            updcolorpicker()
+        end
+    end)
 
-		local onoff = false
-		click.MouseButton1Click:Connect(function()
-			onoff = not onoff
-			if onoff == true then
-				local tween = TweenService:Create(TextButton, TweenInfo.new(0.2, Enum.EasingStyle.Linear),
-					{Size = UDim2.new(1, 0, 0, 140)})tween:play()tween.Completed:Wait()
-			else
-				local tween = TweenService:Create(TextButton, TweenInfo.new(0.2, Enum.EasingStyle.Linear),
-					{Size = UDim2.new(1, 0, 0, 25)})tween:play()tween.Completed:Wait()
-			end
-		end)
-	end
+    TextButton.Changed:Connect(function(prop)
+        if prop == "Size" then
+            if TextButton.Size.Y.Offset >= 60 then
+                picker.Position = UDim2.new(0, 5, 0, 5)
+                UI_Grade.Visible = true
+                A_1.Visible = true
+                grade.Visible = true
+            else
+                picker.Position = UDim2.new(0, 5, 0, 2.5)
+                UI_Grade.Visible = false
+                A_1.Visible = false
+                grade.Visible = false
+            end
+            -- Resize the parent container
+            if parent then
+                local newHeight = CalculateContainerHeight(parent)
+                parent:TweenSize(UDim2.new(1, 0, 0, newHeight), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.3, true)
+            end
+        end
+    end)
+
+    local onoff = false
+    click.MouseButton1Click:Connect(function()
+        onoff = not onoff
+        if onoff == true then
+            local tween = TweenService:Create(TextButton, TweenInfo.new(0.2, Enum.EasingStyle.Linear),
+                {Size = UDim2.new(1, 0, 0, 140)})tween:play()tween.Completed:Wait()
+        else
+            local tween = TweenService:Create(TextButton, TweenInfo.new(0.2, Enum.EasingStyle.Linear),
+                {Size = UDim2.new(1, 0, 0, 25)})tween:play()tween.Completed:Wait()
+        end
+    end)
+end
+
+function CalculateContainerHeight(container)
+    local totalHeight = 0
+    for _, child in ipairs(container:GetChildren()) do
+        if child:IsA("GuiObject") then
+            totalHeight = totalHeight + child.Size.Y.Offset
+        end
+    end
+    return totalHeight + 10 -- Adding padding
+end
+
 ------ADADDD
 function AddDiscord(parent, Configs)
     local DiscordLink = Configs[1] or Configs.DiscordLink or "https://discord.gg/"
