@@ -1088,6 +1088,13 @@ function AddContainer(parent, Configs)
         BackgroundTransparency = 0
     })Corner(ContainerFrame)
 
+        Create("UIPadding", ContainerFrame, {
+        PaddingLeft = UDim.new(0, 10),
+        PaddingRight = UDim.new(0, 10),
+        PaddingTop = UDim.new(0, 10),
+        PaddingBottom = UDim.new(0, 10)
+    })
+
     -- Create the button to open the container menu
     local ContainerButton = Create("TextButton", ContainerFrame, {
         Size = UDim2.new(1, 0, 0, 25),
