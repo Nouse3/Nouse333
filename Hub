@@ -481,7 +481,7 @@ function AddImage(parent, Configs)
     return ImageLabel
 end
 --ADDD
-local function AddDatosVersion(parent, Configs)
+function AddDatosVersion(parent, Configs)
     local versionText = Configs.Version or "V1.2"
     local fechaText = Configs.Fecha or "4/08/2024"
 
@@ -543,7 +543,7 @@ local function AddDatosVersion(parent, Configs)
     return UpdateTexts
 end
 ---
-local function AddCosaADD(parent, Configs)
+function AddCosaADD(parent, Configs)
     local addedText = Configs.AddedText or "Añadido / ()"
 
     -- Create CosaADD Frame
