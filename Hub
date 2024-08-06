@@ -1084,7 +1084,7 @@ function AddContainer(parent, Configs)
     -- Create the main frame for the container
     local ContainerFrame = Create("Frame", parent, {
         Size = UDim2.new(1, 0, 0, 25),
-		BackgroundColor3 = Color3.fromRGB(32, 32, 32),
+        BackgroundColor3 = Color3.fromRGB(32, 32, 32),
         BackgroundTransparency = 0
     })Corner(ContainerFrame)Stroke(ContainerFrame)
 
@@ -1152,18 +1152,18 @@ function AddContainer(parent, Configs)
 
     -- Handle container button click
     ContainerButton.MouseButton1Click:Connect(function()
-        local onoff = ContainerFrame.Size.Y.Offset > 50
-        if onoff then
+        local isOpen = ContainerFrame.Size.Y.Offset > 50
+        if isOpen then
+            ToggleComponentsVisibility(false)
             local tween = TweenService:Create(ContainerFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, 25)})
             tween:Play()
-            tween.Completed:Connect(function()
-                ToggleComponentsVisibility(false)
-            end)
         else
-            ToggleComponentsVisibility(true)
             local newHeight = CalculateContainerHeight()
             local tween = TweenService:Create(ContainerFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, newHeight)})
             tween:Play()
+            tween.Completed:Connect(function()
+                ToggleComponentsVisibility(true)
+            end)
         end
     end)
 
