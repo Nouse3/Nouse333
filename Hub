@@ -1032,7 +1032,7 @@ function AddTextBox(parent, Configs)
 
     return TextBoxFrame
 end
------------------------------------------------------------------------------AddContainer
+-----------------------------------------------------------------------------AddButton
 function AddButton(parent, Configs)
     local ButtonName = Configs.Name or "Button"
     local Callback = Configs.Callback or function() end
@@ -1074,7 +1074,7 @@ function AddButton(parent, Configs)
 
     return ButtonFrame
 end
------------------------------------------------------------------------------DrownDon
+-----------------------------------------------------------------------------AddContainer
 local TweenService = game:GetService("TweenService")
 
 function AddContainer(parent, Configs)
@@ -1086,7 +1086,7 @@ function AddContainer(parent, Configs)
         Size = UDim2.new(1, 0, 0, 25),
         BackgroundColor3 = Color3.fromRGB(32, 32, 32),
         BackgroundTransparency = 0
-    })Corner(ContainerFrame)Stroke(ContainerFrame)
+    })Corner(ContainerFrame)
 
     -- Create the button to open the container menu
     local ContainerButton = Create("TextButton", ContainerFrame, {
