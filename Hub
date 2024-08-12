@@ -1101,29 +1101,55 @@ function AddDropdown(parent, Configs)
     local Default = Configs.Default or Options[1]
     local Callback = Configs.Callback or function() end
 
-    -- Create the dropdown button
-    local DropdownButton = Create("TextButton", parent, {
-        Size = UDim2.new(1, 0, 0, 25),
+    -- Create the main frame for the dropdown
+    local DropdownFrame = Create("Frame", parent, {
+        Size = UDim2.new(1, 0, 0, 50),
+        BackgroundTransparency = 1
+    })
+
+    -- Create the label for the dropdown
+    local DropdownLabel = Create("TextLabel", DropdownFrame, {
+        Size = UDim2.new(1, -50, 0, 25),
+        Position = UDim2.new(0, 10, 0, 0),
+        BackgroundTransparency = 1,
+        TextColor3 = Configs_HUB.Cor_Text,
+        Text = DropdownName,
+        TextXAlignment = Enum.TextXAlignment.Left,
+        Font = Configs_HUB.Text_Font,
+        TextSize = 14
+    })
+
+    -- Create the button to open the dropdown menu
+    local DropdownButton = Create("TextButton", DropdownFrame, {
+        Size = UDim2.new(1, -20, 0, 25),
+        Position = UDim2.new(0, 10, 0, 25),
         BackgroundColor3 = Configs_HUB.Cor_Options,
         TextColor3 = Configs_HUB.Cor_Text,
-        Text = DropdownName .. ": " .. Default,
+        Text = Default,
         Font = Configs_HUB.Text_Font,
         TextSize = 14,
         AutoButtonColor = false
     })Corner(DropdownButton)Stroke(DropdownButton)
 
-    -- Create the dropdown list container
-    local DropdownMenu = Create("Frame", parent, {
-        Size = UDim2.new(1, 0, 0, 0),
+    -- Create the dropdown menu
+    local DropdownMenu = Create("Frame", DropdownFrame, {
+        Size = UDim2.new(1, -20, 0, #Options * 25),
+        Position = UDim2.new(0, 10, 0, 55),
         BackgroundColor3 = Configs_HUB.Cor_Options,
         Visible = false,
         ClipsDescendants = true
     })Corner(DropdownMenu)Stroke(DropdownMenu)
 
     local UIListLayout = Create("UIListLayout", DropdownMenu, {
-        SortOrder = Enum.SortOrder.LayoutOrder,
-        Padding = UDim.new(0, 5)
+        SortOrder = Enum.SortOrder.LayoutOrder
     })
+
+    -- Function to update dropdown selection
+    local function UpdateSelection(selectedOption)
+        DropdownButton.Text = selectedOption
+        DropdownMenu.Visible = false
+        Callback(selectedOption)
+    end
 
     -- Add options to the dropdown menu
     for _, option in ipairs(Options) do
@@ -1138,42 +1164,19 @@ function AddDropdown(parent, Configs)
         })Corner(OptionButton)Stroke(OptionButton)
 
         OptionButton.MouseButton1Click:Connect(function()
-            DropdownButton.Text = DropdownName .. ": " .. option
-            DropdownMenu.Visible = false
-            local parentContainer = parent.Parent -- Assuming DropdownMenu's parent is the container frame
-            parentContainer:TweenSize(UDim2.new(1, 0, 0, CalculateContainerHeight(parentContainer)), "Out", "Quad", 0.2, true)
-            Callback(option)
+            UpdateSelection(option)
         end)
     end
 
-    -- Handle dropdown button click to toggle menu
+    -- Handle dropdown button click
     DropdownButton.MouseButton1Click:Connect(function()
-        if DropdownMenu.Visible then
-            DropdownMenu.Visible = false
-            local parentContainer = parent.Parent -- Assuming DropdownMenu's parent is the container frame
-            parentContainer:TweenSize(UDim2.new(1, 0, 0, CalculateContainerHeight(parentContainer)), "Out", "Quad", 0.2, true)
-        else
-            DropdownMenu.Visible = true
-            local newHeight = #Options * 30 + 10 -- Adjust height based on options count
-            DropdownMenu:TweenSize(UDim2.new(1, 0, 0, newHeight), "Out", "Quad", 0.2, true)
-
-            local parentContainer = parent.Parent -- Assuming DropdownMenu's parent is the container frame
-            parentContainer:TweenSize(UDim2.new(1, 0, 0, CalculateContainerHeight(parentContainer)), "Out", "Quad", 0.2, true)
-        end
+        DropdownMenu.Visible = not DropdownMenu.Visible
     end)
 
-    return DropdownButton
-end
+    -- Set initial selection
+    UpdateSelection(Default)
 
--- Function to calculate the container height based on its content
-function CalculateContainerHeight(container)
-    local totalHeight = 10 -- Starting height with some padding
-    for _, child in ipairs(container:GetChildren()) do
-        if child:IsA("GuiObject") and child.Visible then
-            totalHeight = totalHeight + child.Size.Y.Offset + 5 -- Add child height with padding
-        end
-    end
-    return totalHeight
+    return DropdownFrame
 end
 -----------------------------------------------------------------------------AddContainer
 local TweenService = game:GetService("TweenService")
