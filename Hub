@@ -1103,13 +1103,11 @@ function AddDropdown(parent, Configs)
     local Default = Configs.Default or Options[1]
     local Callback = Configs.Callback or function() end
 
-    -- Create the main frame for the dropdown
     local DropdownFrame = Create("Frame", parent, {
         Size = UDim2.new(1, 0, 0, 50),
         BackgroundTransparency = 1
     })
 
-    -- Create the label for the dropdown
     local DropdownLabel = Create("TextLabel", DropdownFrame, {
         Size = UDim2.new(1, -50, 0, 25),
         Position = UDim2.new(0, 10, 0, 0),
@@ -1121,7 +1119,6 @@ function AddDropdown(parent, Configs)
         TextSize = 14
     })
 
-    -- Create the button to open the dropdown menu
     local DropdownButton = Create("TextButton", DropdownFrame, {
         Size = UDim2.new(1, -20, 0, 25),
         Position = UDim2.new(0, 10, 0, 25),
@@ -1133,7 +1130,6 @@ function AddDropdown(parent, Configs)
         AutoButtonColor = false
     })Corner(DropdownButton)Stroke(DropdownButton)
 
-    -- Create the dropdown menu
     local DropdownMenu = Create("Frame", DropdownFrame, {
         Size = UDim2.new(1, -20, 0, #Options * 25),
         Position = UDim2.new(0, 10, 0, 55),
@@ -1146,22 +1142,29 @@ function AddDropdown(parent, Configs)
         SortOrder = Enum.SortOrder.LayoutOrder
     })
 
-    -- Function to update dropdown selection
     local function UpdateSelection(selectedOption)
         DropdownButton.Text = selectedOption
         DropdownMenu.Visible = false
         Callback(selectedOption)
     end
 
-    -- Function to resize the container when dropdown opens or closes
     local function ResizeContainer(expanding)
-        local parentFrame = parent -- Assuming 'parent' is the ContainerFrame
-        local newHeight = parentFrame.Size.Y.Offset + (expanding and (#Options * 25) or -(#Options * 25))
-        local tween = TweenService:Create(parentFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, newHeight)})
+        local dropdownHeight = 50 + (expanding and #Options * 25 or 0)
+        local tween = TweenService:Create(DropdownFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, dropdownHeight)})
         tween:Play()
+
+        if parent then
+            local containerNewHeight
+            if expanding then
+                containerNewHeight = parent.Size.Y.Offset + (#Options * 25)
+            else
+                containerNewHeight = parent.Size.Y.Offset - (#Options * 25)
+            end
+            local parentTween = TweenService:Create(parent, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, containerNewHeight)})
+            parentTween:Play()
+        end
     end
 
-    -- Add options to the dropdown menu
     for _, option in ipairs(Options) do
         local OptionButton = Create("TextButton", DropdownMenu, {
             Size = UDim2.new(1, 0, 0, 25),
@@ -1178,20 +1181,26 @@ function AddDropdown(parent, Configs)
         end)
     end
 
-    -- Handle dropdown button click
+    local isExpanded = false
     DropdownButton.MouseButton1Click:Connect(function()
-        if DropdownMenu.Visible then
-            ResizeContainer(false)
-        else
-            ResizeContainer(true)
-        end
-        DropdownMenu.Visible = not DropdownMenu.Visible
+        isExpanded = not isExpanded
+        ResizeContainer(isExpanded)
+        DropdownMenu.Visible = isExpanded
     end)
 
-    -- Set initial selection
     UpdateSelection(Default)
 
     return DropdownFrame
+end
+
+function CalculateContainerHeight(container)
+    local totalHeight = 0
+    for _, child in ipairs(container:GetChildren()) do
+        if child:IsA("GuiObject") then
+            totalHeight = totalHeight + child.Size.Y.Offset
+        end
+    end
+    return totalHeight + 10
 end
 -----------------------------------------------------------------------------AddContainer
 local TweenService = game:GetService("TweenService")
