@@ -1095,6 +1095,8 @@ function AddButton(parent, Configs)
     return ButtonFrame
 end
 -----------------------------------------------------------------------------AddDropdown
+local TweenService = game:GetService("TweenService")
+
 function AddDropdown(parent, Configs)
     local DropdownName = Configs.Name or "Dropdown"
     local Options = Configs.Options or {}
@@ -1151,6 +1153,14 @@ function AddDropdown(parent, Configs)
         Callback(selectedOption)
     end
 
+    -- Function to resize the container when dropdown opens or closes
+    local function ResizeContainer(expanding)
+        local parentFrame = parent -- Assuming 'parent' is the ContainerFrame
+        local newHeight = parentFrame.Size.Y.Offset + (expanding and (#Options * 25) or -(#Options * 25))
+        local tween = TweenService:Create(parentFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, newHeight)})
+        tween:Play()
+    end
+
     -- Add options to the dropdown menu
     for _, option in ipairs(Options) do
         local OptionButton = Create("TextButton", DropdownMenu, {
@@ -1170,6 +1180,11 @@ function AddDropdown(parent, Configs)
 
     -- Handle dropdown button click
     DropdownButton.MouseButton1Click:Connect(function()
+        if DropdownMenu.Visible then
+            ResizeContainer(false)
+        else
+            ResizeContainer(true)
+        end
         DropdownMenu.Visible = not DropdownMenu.Visible
     end)
 
