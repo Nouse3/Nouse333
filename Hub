@@ -1104,36 +1104,25 @@ function AddDropdown(parent, Configs)
     local Callback = Configs.Callback or function() end
 
     local DropdownFrame = Create("Frame", parent, {
-        Size = UDim2.new(1, 0, 0, 50),
+        Size = UDim2.new(1, 0, 0, 25),
         BackgroundTransparency = 1
     })
 
-    local DropdownLabel = Create("TextLabel", DropdownFrame, {
-        Size = UDim2.new(1, -50, 0, 25),
-        Position = UDim2.new(0, 10, 0, 0),
-        BackgroundTransparency = 1,
-        TextColor3 = Configs_HUB.Cor_Text,
-        Text = DropdownName,
-        TextXAlignment = Enum.TextXAlignment.Left,
-        Font = Configs_HUB.Text_Font,
-        TextSize = 14
-    })
-
     local DropdownButton = Create("TextButton", DropdownFrame, {
-        Size = UDim2.new(1, -20, 0, 25),
-        Position = UDim2.new(0, 10, 0, 25),
+        Size = UDim2.new(1, 0, 0, 25),
+        Position = UDim2.new(0, 0, 0, 0),
         BackgroundColor3 = Configs_HUB.Cor_Options,
         TextColor3 = Configs_HUB.Cor_Text,
         Text = Default,
         Font = Configs_HUB.Text_Font,
         TextSize = 14,
         AutoButtonColor = false
-    })Corner(DropdownButton)Stroke(DropdownButton)
+    })Corner(DropdownButton)
 
     local DropdownMenu = Create("Frame", DropdownFrame, {
-        Size = UDim2.new(1, -20, 0, #Options * 25),
-        Position = UDim2.new(0, 10, 0, 55),
-        BackgroundColor3 = Configs_HUB.Cor_Options,
+        Size = UDim2.new(1, 0, 0, #Options * 25),
+        Position = UDim2.new(0, 0, 0, 25),
+        BackgroundColor3 = Color3.fromRGB(32, 32, 32),
         Visible = false,
         ClipsDescendants = true
     })Corner(DropdownMenu)Stroke(DropdownMenu)
@@ -1144,12 +1133,13 @@ function AddDropdown(parent, Configs)
 
     local function UpdateSelection(selectedOption)
         DropdownButton.Text = selectedOption
-        DropdownMenu.Visible = false
+        -- Removed the line below to keep the dropdown menu open after selection
+        -- DropdownMenu.Visible = false
         Callback(selectedOption)
     end
 
     local function ResizeContainer(expanding)
-        local dropdownHeight = 50 + (expanding and #Options * 25 or 0)
+        local dropdownHeight = 25 + (expanding and #Options * 25 or 0)
         local tween = TweenService:Create(DropdownFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1, 0, 0, dropdownHeight)})
         tween:Play()
 
@@ -1173,8 +1163,9 @@ function AddDropdown(parent, Configs)
             Text = option,
             Font = Configs_HUB.Text_Font,
             TextSize = 14,
-            AutoButtonColor = false
-        })Corner(OptionButton)Stroke(OptionButton)
+            AutoButtonColor = false,
+            BackgroundTransparency = 1
+        })Corner(OptionButton)
 
         OptionButton.MouseButton1Click:Connect(function()
             UpdateSelection(option)
@@ -1188,6 +1179,8 @@ function AddDropdown(parent, Configs)
         DropdownMenu.Visible = isExpanded
     end)
 
+    -- Initialize the dropdown without hiding the menu
+    DropdownMenu.Visible = isExpanded
     UpdateSelection(Default)
 
     return DropdownFrame
